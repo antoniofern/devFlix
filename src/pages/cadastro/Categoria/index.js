@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PageDefault from '../../../components/PageDefault';
 import { Link } from 'react-router-dom';
+import FormField from '../../../components/FormField';
 
 export default function CadastroCategoria() {
   const valoresIniciais = {
@@ -25,8 +26,7 @@ export default function CadastroCategoria() {
   }
 
   function handleChange(event) {
-    const { getAttribute, value } = event.target;
-    setValue(getAttribute('name'), value);
+    setValue(event.target.getAttribute('name'), event.target.value);
   }
 
   return (
@@ -34,39 +34,27 @@ export default function CadastroCategoria() {
       <h1>Cadastro de Categoria: {values.nome}</h1>
 
       <form onSubmit={handleSubmit}>
-        <div>
-          <label>
-            Nome da categoria:
-            <input
-              type='text'
-              name='nome'
-              value={values.nome}
-              onChange={handleChange}
-            />
-          </label>
-        </div>
-        <div>
-          <label>
-            Descrição:
-            <input
-              type='textarea'
-              name='descricao'
-              value={values.descricao}
-              onChange={handleChange}
-            />
-          </label>
-        </div>
-        <div>
-          <label>
-            Cor:
-            <input
-              type='color'
-              name='cor'
-              value={values.cor}
-              onChange={handleChange}
-            />
-          </label>
-        </div>
+        <FormField
+          label='Nome da categoria'
+          type='text'
+          name='nome'
+          value={values.nome}
+          onChange={handleChange}
+        />
+        <FormField
+          label='Descrição'
+          type='textarea'
+          name='descricao'
+          value={values.descricao}
+          onChange={handleChange}
+        />
+        <FormField
+          label='Cor'
+          type='color'
+          name='cor'
+          value={values.cor}
+          onChange={handleChange}
+        />
         <button>Cadastrar</button>
       </form>
 
