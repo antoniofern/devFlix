@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import PageDefault from '../../../components/PageDefault';
 import { Link } from 'react-router-dom';
+import PageDefault from '../../../components/PageDefault';
 import FormField from '../../../components/FormField';
+import Button from '../../../components/components/Button';
 
 export default function CadastroCategoria() {
   const valoresIniciais = {
@@ -31,40 +32,42 @@ export default function CadastroCategoria() {
 
   return (
     <PageDefault>
-      <h1>Cadastro de Categoria: {values.nome}</h1>
+      <h1>
+        Cadastro de Categoria:
+        {' '}
+        {values.nome}
+      </h1>
 
       <form onSubmit={handleSubmit}>
         <FormField
-          label='Nome da categoria'
-          type='text'
-          name='nome'
+          label="Nome da categoria"
+          type="text"
+          name="nome"
           value={values.nome}
           onChange={handleChange}
         />
         <FormField
-          label='Descrição'
-          type='textarea'
-          name='descricao'
+          label="Descrição"
+          type="textarea"
+          name="descricao"
           value={values.descricao}
           onChange={handleChange}
         />
         <FormField
-          label='Cor'
-          type='color'
-          name='cor'
+          label="Cor"
+          type="color"
+          name="cor"
           value={values.cor}
           onChange={handleChange}
         />
-        <button>Cadastrar</button>
+        <Button>Cadastrar</Button>
       </form>
 
       <ul>
-        {categoria.map((categoria, index) => {
-          return <li key={`${categoria}${index}`}>{categoria.nome}</li>;
-        })}
+        {categoria.map((category, index) => <li key={`${category}${index}`}>{category.nome}</li>)}
       </ul>
 
-      <Link to='/'>Ir para home</Link>
+      <Link to="/">Ir para home</Link>
     </PageDefault>
   );
 }
