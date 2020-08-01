@@ -52,10 +52,20 @@ const Input = styled.input`
   &:focus {
     border-bottom-color: var(--primary);
   }
-  &:focus:not([type='color']) + ${Label.Text} {
-    transform: scale(.6) translateY(-10px);
+  &:focus:not([type="color"]) + ${Label.Text} {
+    transform: scale(0.6) translateY(-10px);
   }
-
+  ${({ value }) => {
+    const hasValue = value.length > 0;
+    return (
+      hasValue
+      && css`
+        &:not([type="color"]) + ${Label.Text} {
+          transform: scale(0.6) translateY(-10px);
+        }
+      `
+    );
+  }}
 `;
 
 export default function FormField({
