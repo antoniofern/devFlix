@@ -31,13 +31,13 @@ export default function CadastroCategoria() {
   }
 
   useEffect(() => {
-    const URL = 'http://localhost:8080/categorias';
+    const URL = window.location.hostname.includes('localhost') ? 'http://localhost:8080/categorias' : 'https://devvflixx.herokuapp.com/categorias';
     fetch(URL)
       .then(async (respostaDoServidor) => {
         const resposta = await respostaDoServidor.json();
         setCategoria([...resposta]);
       });
-  });
+  }, []);
 
   return (
     <PageDefault>
@@ -80,7 +80,7 @@ export default function CadastroCategoria() {
 
       <ul>
         {categoria.map((category, index) => (
-          <li key={`${category}${index}`}>{category.nome}</li>
+          <li key={`${category}${index}`}>{category.titulo}</li>
         ))}
       </ul>
 
