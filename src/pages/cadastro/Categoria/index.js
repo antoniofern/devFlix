@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import PageDefault from '../../../components/PageDefault';
 import FormField from '../../../components/FormField';
 import Button from '../../../components/components/Button';
+import useForm from '../../../hooks/useForm';
 
 export default function CadastroCategoria() {
   const valoresIniciais = {
@@ -10,33 +11,25 @@ export default function CadastroCategoria() {
     descricao: '',
     cor: '',
   };
-  const [categoria, setCategoria] = useState([]);
-  const [values, setValues] = useState(valoresIniciais);
 
-  function setValue(chave, valor) {
-    setValues({
-      ...values,
-      [chave]: valor,
-    });
-  }
+  const { handleChange, values, clearForm } = useForm(valoresIniciais);
+
+  const [categoria, setCategoria] = useState([]);
 
   function handleSubmit(infosDoEvento) {
     infosDoEvento.preventDefault();
     setCategoria([...categoria, values]);
-    setValues(valoresIniciais);
-  }
-
-  function handleChange(event) {
-    setValue(event.target.getAttribute('name'), event.target.value);
+    clearForm();
   }
 
   useEffect(() => {
-    const URL = window.location.hostname.includes('localhost') ? 'http://localhost:8080/categorias' : 'https://devvflixx.herokuapp.com/categorias';
-    fetch(URL)
-      .then(async (respostaDoServidor) => {
-        const resposta = await respostaDoServidor.json();
-        setCategoria([...resposta]);
-      });
+    const URL = window.location.hostname.includes('localhost')
+      ? 'http://localhost:8080/categorias'
+      : 'https://devvflixx.herokuapp.com/categorias';
+    fetch(URL).then(async (respostaDoServidor) => {
+      const resposta = await respostaDoServidor.json();
+      setCategoria([...resposta]);
+    });
   }, []);
 
   return (
@@ -72,15 +65,11 @@ export default function CadastroCategoria() {
         <Button>Cadastrar</Button>
       </form>
 
-      {categoria.length === 0 && (
-        <div>
-          Loading...
-        </div>
-      )}
+      {categoria.length === 0 && <div>Loading...</div>}
 
       <ul>
-        {categoria.map((category, index) => (
-          <li key={`${category}${index}`}>{category.titulo}</li>
+        {categoria.map((category) => (
+          <li key={category}>{category.titulo}</li>
         ))}
       </ul>
 
